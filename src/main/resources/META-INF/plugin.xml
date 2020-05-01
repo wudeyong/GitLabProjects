@@ -1,8 +1,8 @@
 <idea-plugin>
-    <id>com.ppolivka.gitlabprojects</id>
-    <name>GitLab Projects</name>
-    <version>2.0.1</version>
-    <vendor email="polivka.pavel@gmail.com" url="https://www.ppolivka.com">Pavel Polivka</vendor>
+    <id>cn.failfast</id>
+    <name>GitLab Projects 2020</name>
+    <version>2.0.2</version>
+    <vendor email="dairowu@163.com" url="https://github.com/wudeyong/GitLabProjects">Davin</vendor>
 
     <description><![CDATA[
         <h2>GitLab Projects Plugin</h2>
@@ -14,17 +14,22 @@
             <li><b>GitLab Merge Request dialog</b> - user can quickly create new merge requests from current branch</li>
             <li><b>GitLab Merge Request List dialog</b> - user can list and accept all open code reviews</li>
         </ul>
+        fork from <a href="https://github.com/PavlikPolivka/GitLabProjects">https://github.com/PavlikPolivka/GitLabProjects</a></br>
+        <b>github: <a href="https://github.com/wudeyong/GitLabProjects">GitLabProjects</a></b>
     ]]></description>
-
+    GitLabUtil.java
     <change-notes><![CDATA[
-        <b>Bugfixing release</b><br>
+        Quick create merge request or list merge request in vcs popup.</br>
+        Support idea 2020 and newer version only.</br>
+        Fixed duplicated key error when installed GitLabProject.</br>
+        Fixed npe for idea 2020.<br>
         List only active projects.<br>
         Changes to the UI of the setting dialog to make it more clear.<br>
         Wording unification with GitHub integration.<br>
     ]]>
     </change-notes>
 
-    <idea-version since-build="181"/>
+    <idea-version since-build="201"/>
 
     <depends>com.intellij.modules.platform</depends>
     <depends>com.intellij.modules.vcs</depends>
@@ -32,19 +37,19 @@
     <extensions defaultExtensionNs="com.intellij">
 
         <!-- Configuration state service ( persistable settings ) -->
-        <applicationService serviceInterface="com.ppolivka.gitlabprojects.configuration.SettingsState"
-                            serviceImplementation="com.ppolivka.gitlabprojects.configuration.SettingsState"/>
+        <applicationService serviceImplementation="cn.failfast.gitlabprojects.configuration.SettingsState"/>
 
         <!-- provider for the configurable instance ( configuration settings ) -->
         <projectConfigurable id="GitLabConfigurableProvider"
-                                 provider="com.ppolivka.gitlabprojects.configuration.SettingsConfigurableProvider" parentId="project.propVCSSupport.Mappings" displayName="GitLab"/>
-        <projectService serviceInterface="com.ppolivka.gitlabprojects.configuration.ProjectState"
-                        serviceImplementation="com.ppolivka.gitlabprojects.configuration.ProjectState"/>
+                             provider="cn.failfast.gitlabprojects.configuration.SettingsConfigurableProvider"
+                             parentId="project.propVCSSupport.Mappings" displayName="GitLab"/>
+
+        <projectService serviceImplementation="cn.failfast.gitlabprojects.configuration.ProjectState"/>
 
     </extensions>
 
     <extensions defaultExtensionNs="Git4Idea">
-        <gitRepositoryHostingService implementation="com.ppolivka.gitlabprojects.checkout.GitLabRepositoryHostingService"/>
+        <gitRepositoryHostingService implementation="cn.failfast.gitlabprojects.checkout.GitLabRepositoryHostingService"/>
     </extensions>
 
     <application-components>
@@ -56,16 +61,25 @@
     </project-components>
 
     <actions>
-        <action id="Gitlab.Share" class="com.ppolivka.gitlabprojects.share.GitLabShareAction">
+        <action id="Gitlab.Share" class="cn.failfast.gitlabprojects.share.GitLabShareAction">
             <add-to-group group-id="Vcs.Import"/>
         </action>
         <group id="GitLabGroup" text="Git _Lab" popup="true" icon="/icons/gitLabSmall.png">
-            <action id="Gitlab.Create.Merge.Request" class="com.ppolivka.gitlabprojects.merge.request.GitLabMergeRequestAction"/>
-            <action id="Gitlab.Create.Merge.Request.List" class="com.ppolivka.gitlabprojects.merge.list.GitLabMergeRequestListAction"/>
+            <action id="Gitlab.Create.Merge.Request" class="cn.failfast.gitlabprojects.merge.request.GitLabMergeRequestAction"/>
+            <action id="Gitlab.Create.Merge.Request.List" class="cn.failfast.gitlabprojects.merge.list.GitLabMergeRequestListAction"/>
 
             <add-to-group group-id="Git.Menu"/>
             <add-to-group group-id="Git.ContextMenu"/>
         </group>
+
+        <group id="FastCreateOrListGitlabProject">
+            <separator text="gitlab project" />
+            <reference ref="Gitlab.Create.Merge.Request"/>
+            <reference ref="Gitlab.Create.Merge.Request.List"/>
+
+            <add-to-group group-id="Vcs.Operations.Popup"/>
+        </group>
+
     </actions>
 
     <depends>Git4Idea</depends>

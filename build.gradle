@@ -1,18 +1,13 @@
 plugins {
-    id "org.jetbrains.intellij" version "0.2.13"
-    id 'io.franzbecker.gradle-lombok' version '1.14'
+    id 'java'
+    id 'org.jetbrains.intellij' version '0.4.18'
 }
 
 intellij {
-    version 'IC-2018.1'
+    version 'IC-2020.1'
     updateSinceUntilBuild false
-    plugins 'git4idea'
-    pluginName 'GitLabProjects'
-}
-
-lombok {
-    version = '1.18.2'
-    sha256 = ""
+    plugins = ['git4idea']
+    pluginName 'GitLabProjects2020'
 }
 
 repositories {
@@ -20,6 +15,15 @@ repositories {
 }
 
 dependencies {
-    compile group: 'commons-io', name: 'commons-io', version: '2.4'
-    compile group: 'org.gitlab', name: 'java-gitlab-api', version: '4.0.0'
+
+    compile 'org.gitlab:java-gitlab-api:4.1.1'
+    compile 'commons-io:commons-io:2.6'
+
+    compileOnly 'org.projectlombok:lombok:1.18.12'
+    annotationProcessor 'org.projectlombok:lombok:1.18.12'
+
+    testCompileOnly 'org.projectlombok:lombok:1.18.12'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.12'
+
+    testCompile 'junit:junit:4.12'
 }
