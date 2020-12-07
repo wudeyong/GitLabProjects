@@ -16,5 +16,5 @@ public class GitLabIcons {
 
     public static Icon gitLabIcon = IconLoader.findIcon("/icons/gitLabSmall.png");
 
-    public static JBImageIcon loadingIcon = new JBImageIcon(ImageLoader.loadFromResource("/icons/loading.gif"));
+    public static JBImageIcon loadingIcon = new JBImageIcon(ImageLoader.loadFromResource("/icons/loading.gif",JBImageIcon.class));
 }
