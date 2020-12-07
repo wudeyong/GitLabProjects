@@ -1,13 +1,14 @@
 plugins {
-    id "org.jetbrains.intellij" version "0.2.13"
+    id "org.jetbrains.intellij" version "0.6.5"
     id 'io.franzbecker.gradle-lombok' version '1.14'
 }
 
 intellij {
-    version 'IC-2018.1'
+    version 'IC-2020.3'
     updateSinceUntilBuild false
     plugins 'git4idea'
     pluginName 'GitLabProjects'
+
 }
 
 lombok {
