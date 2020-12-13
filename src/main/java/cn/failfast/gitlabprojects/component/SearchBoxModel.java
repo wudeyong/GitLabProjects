@@ -57,6 +57,7 @@ public class SearchBoxModel extends AbstractListModel implements ComboBoxModel, 
                             dataChanged();
                         } else if (in == null || "".equals(in)){
                             data.clear();
+                            data.add(new EmptyUser(""));
                             data.addAll(searchableUsers.getInitialModel());
                             dataChanged();
                         }
@@ -105,8 +106,9 @@ public class SearchBoxModel extends AbstractListModel implements ComboBoxModel, 
         } else if (e.getKeyCode() == KeyEvent.VK_ENTER) {
             comboBox.setSelectedIndex(comboBox.getSelectedIndex());
         } else {
-            updateModel(comboBox.getEditor().getItem().toString());
-            comboBoxEditor.setItem(str);
+            String in = comboBox.getEditor().getItem().toString();
+            updateModel(in);
+            comboBoxEditor.setItem(in);
             jtf.setCaretPosition(currentPosition);
         }
     }
